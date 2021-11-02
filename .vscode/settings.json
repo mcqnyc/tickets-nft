@@ -1,0 +1,14 @@
+
+{
+    "deno.enable": true,
+    "workbench.colorCustomizations": {
+      "editorGroup.border": "#2f7c47",
+      "panel.border": "#2f7c47",
+      "sash.hoverBorder": "#2f7c47",
+      "sideBar.border": "#2f7c47",
+      "titleBar.activeBackground": "#215732",
+      "titleBar.activeForeground": "#e7e7e7",
+      "titleBar.inactiveBackground": "#21573299",
+      "titleBar.inactiveForeground": "#e7e7e799"
+    },
+}

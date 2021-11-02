@@ -1,0 +1,10 @@
+[project]
+name = "tickets-nft"
+requirements = []
+[contracts.tickets-nft]
+path = "contracts/tickets-nft.clar"
+depends_on = ["tickets-nft-trait"]
+
+[contracts.tickets-nft-trait]
+path = "contracts/tickets-nft-trait.clar"
+depends_on = []
