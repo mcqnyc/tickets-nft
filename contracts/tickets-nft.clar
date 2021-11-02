@@ -25,12 +25,12 @@
 
 ;; Claim a new NFT
 (define-public (claim)
-  (begin
-    (unwrap! (pay) (err err-stx-transfer))
-    (asserts! (> (var-get max-token-id) (var-get last-token-id)) err-token-max-reached)
-    (asserts! (< block-height (var-get use-by-block)) err-use-by-block-reached)
-    (mint tx-sender)
-  )
+    (begin
+        (unwrap! (pay) (err err-stx-transfer))
+        (asserts! (> (var-get max-token-id) (var-get last-token-id)) err-token-max-reached)
+        (asserts! (< block-height (var-get use-by-block)) err-use-by-block-reached)
+        (mint tx-sender)
+    )
 )
 
 ;; SIP009: Transfer token to a specified principal
@@ -43,15 +43,15 @@
 
 ;; SIP009: Get the owner of the specified token ID
 (define-read-only (get-owner (token-id uint))
-  (ok (nft-get-owner? TKT token-id)))
+    (ok (nft-get-owner? TKT token-id)))
 
 ;; SIP009: Get the last token ID
 (define-read-only (get-last-token-id)
-  (ok (var-get last-token-id)))
+    (ok (var-get last-token-id)))
 
 ;; SIP009: Get the token URI. You can set it to any other URI
 (define-read-only (get-token-uri (token-id uint))
-  (ok (some "https://docs.stacks.co")))
+    (ok (some "https://docs.stacks.co")))
 
 ;; Internal - Mint new NFT
 (define-private (mint (new-owner principal))
@@ -67,5 +67,5 @@
 
 ;; pay for a new NFT
 (define-private (pay)
-  (stx-transfer? (var-get price) tx-sender (as-contract tx-sender))
+    (stx-transfer? (var-get price) tx-sender (as-contract tx-sender))
 )
