@@ -1,12 +1,17 @@
-(impl-trait .tickets-nft-trait.tickets-nft-trait)
 ;; use the SIP009 interface
+(impl-trait .tickets-nft-trait.tickets-nft-trait)
+
+;; constants
+(define-constant contract-owner tx-sender)
 
 ;; errors
 (define-constant err-token-max-reached (err u101))
 (define-constant err-use-by-block-reached (err u102))
-(define-constant err-not-token-owner (err u103))
+(define-constant err-use-by-block-not-reached (err u103))
 (define-constant err-nft-exists-already (err u104))
 (define-constant err-stx-transfer u105)
+(define-constant err-not-token-owner (err u106))
+(define-constant err-invalid-caller (err u107))
 
 
 ;; define a new NFT
@@ -26,9 +31,9 @@
 ;; Claim a new NFT
 (define-public (claim)
     (begin
-        (unwrap! (pay) (err err-stx-transfer))
         (asserts! (> (var-get max-token-id) (var-get last-token-id)) err-token-max-reached)
         (asserts! (< block-height (var-get use-by-block)) err-use-by-block-reached)
+        (try! (stx-transfer? (var-get price) tx-sender (as-contract tx-sender)))
         (mint tx-sender)
     )
 )
@@ -63,9 +68,4 @@
             (ok true))
         error err-nft-exists-already)
     )
-)
-
-;; pay for a new NFT
-(define-private (pay)
-    (stx-transfer? (var-get price) tx-sender (as-contract tx-sender))
 )
