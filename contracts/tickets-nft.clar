@@ -28,6 +28,13 @@
     (var-get price)
 )
 
+(define-public (withdraw-stx)
+    (begin
+        (asserts! (is-eq tx-sender contract-owner) err-invalid-caller)
+        (asserts! (>= block-height (var-get use-by-block)) err-use-by-block-not-reached)
+        (as-contract (stx-transfer? (stx-get-balance tx-sender) tx-sender contract-owner))
+    )
+)
 ;; Claim a new NFT
 (define-public (claim)
     (begin
